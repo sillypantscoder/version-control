@@ -3,6 +3,14 @@
         "name": "something",
         "files": {
             "test.txt": "test"
-        }
+        },
+        "next": [1]
+    },
+    {
+        "name": "something else",
+        "files": {
+            "test.txt": "test 2"
+        },
+        "next": []
     }
 ]
