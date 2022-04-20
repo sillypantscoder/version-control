@@ -5,11 +5,11 @@ class Commit:
 	def __init__(self, n: int):
 		self.index = n
 		f = open("commits.json", "r")
-		self.commit = json.load(f)[n]
+		self.commit: dict = json.load(f)[n]
 		f.close()
-		self.files = self.commit["files"]
-		self.name = self.commit["name"]
-	def getNextCommits(self):
+		self.files: dict[str, str] = self.commit["files"]
+		self.name: str = self.commit["name"]
+	def getNextCommits(self) -> "list[Commit]":
 		return [Commit(i) for i in self.commit["next"]]
 	def apply(self):
 		os.system("rm test_dir/*")
