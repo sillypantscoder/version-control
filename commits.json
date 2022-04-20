@@ -1,0 +1,8 @@
+[
+    {
+        "name": "something",
+        "files": {
+            "test.txt": "test"
+        }
+    }
+]
