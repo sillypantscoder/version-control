@@ -22,12 +22,15 @@ while running:
 	for i in range(len(commits)):
 		r = 15
 		if pygame.Rect(0, i * 50, 50, 50).collidepoint(pygame.mouse.get_pos()):
+			# Hovered
 			r = 20
 			rendered = FONT.render(commits[i].name, True, (0, 0, 0))
 			screen.blit(rendered, (50, ((i + 1) * 50) - ((rendered.get_height() / 2) + 25)))
 			if pygame.mouse.get_pressed()[0]:
 				commits[i].apply()
 		pygame.draw.circle(screen, (0, 0, 0), (25, (i * 50) + 25), r)
+		if commits[i].index == ver.getCurrentCommit().index:
+			pygame.draw.circle(screen, (0, 255, 0), (25, (i * 50) + 25), r, 2)
 		for n in commits[i].getNextCommits():
 			pygame.draw.line(screen, (0, 0, 0), (25, (i * 50) + 25), (25, (n.index * 50) + 25), 5)
 	pygame.display.flip()

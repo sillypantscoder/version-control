@@ -1,16 +1,21 @@
-[
-	{
-		"name": "something",
-		"files": {
-			"test.txt": "test"
+{
+	"current": 0,
+	"commits": [
+		{
+			"name": "something",
+			"files": {
+				"test.txt": "test"
+			},
+			"next": [
+				1
+			]
 		},
-		"next": [1]
-	},
-	{
-		"name": "something else",
-		"files": {
-			"test.txt": "test 2"
-		},
-		"next": []
-	}
-]
+		{
+			"name": "something else",
+			"files": {
+				"test.txt": "test 2"
+			},
+			"next": []
+		}
+	]
+}
