@@ -12,6 +12,15 @@ class Commit:
 		self.type: str = self.commit["type"]
 	def getNextCommits(self) -> "list[Commit]":
 		return [Commit(i) for i in self.commit["next"]]
+	def getPreviousCommits(self) -> "list[Commit]":
+		f = open("commits.json", "r")
+		c = json.load(f)["commits"]
+		f.close()
+		r = []
+		for i in range(len(c)):
+			if self.index in c[i]["next"]:
+				r.append(Commit(i))
+		return r
 	def apply(self):
 		os.system("rm test_dir/*")
 		for i in self.commit["files"]:
@@ -48,13 +57,19 @@ def updateFiles() -> None:
 	f = open("commits.json", "r")
 	commits = json.load(f)
 	f.close()
-	if commits["commits"][commits["current"]]["files"] != getFiles(): 												# if the files have changed:
-		if commits["commits"][commits["current"]]["type"] == "working": 												# if the current commit is a working commit:
-			commits["commits"][commits["current"]]["files"] = getFiles() 													# update the files
-		else: 																											# otherwise:
-			commits["commits"].append({"name": "Local Changes", "files": getFiles(), "next": [], "type": "working"}) 		# add a new working commit
-			commits["commits"][commits["current"]]["next"].append(len(commits["commits"]) - 1) 								# add the new commit to the current commit's next commits
-			commits["current"] = len(commits["commits"]) - 1 																# and switch to the new commit
+	cur = commits["current"]
+	com = commits["commits"][cur]
+	if com["files"] != getFiles():
+		if com["type"] == "working":
+			com["files"] = getFiles()
+			if Commit(cur).getPreviousCommits()[0].files == getFiles():
+				commits["commits"].remove(com)
+				commits["current"] = Commit(cur).getPreviousCommits()[0].index
+				commits["commits"][Commit(cur).getPreviousCommits()[0].index]["next"].remove(cur)
+		else:
+			commits["commits"].append({"name": "Local Changes", "files": getFiles(), "next": [], "type": "working"})
+			com["next"].append(len(commits["commits"]) - 1)
+			commits["current"] = len(commits["commits"]) - 1
 	f = open("commits.json", "w")
 	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
 	f.close()
