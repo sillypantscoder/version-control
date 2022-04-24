@@ -8,14 +8,16 @@
 			},
 			"next": [
 				1
-			]
+			],
+			"type": "commit"
 		},
 		{
 			"name": "something else",
 			"files": {
 				"test.txt": "test 2"
 			},
-			"next": []
+			"next": [],
+			"type": "commit"
 		}
 	]
 }
