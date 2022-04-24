@@ -43,9 +43,9 @@ class Commit:
 			if i.index == self.index:
 				return (prevpos[0] + p, prevpos[1] + 50)
 			p += 50
-	def getPosition(self):
+	def getPosition(self, offset: "tuple[int, int]") -> "tuple[int, int]":
 		b = self._getPosition()
-		return (b[0] + 25, b[1] + 25)
+		return (b[0] + offset[0], b[1] + offset[1])
 	def __repr__(self):
 		return f"<Commit \"{self.name}\">"
 
