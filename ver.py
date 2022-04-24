@@ -34,6 +34,18 @@ class Commit:
 		f = open("commits.json", "w")
 		f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
 		f.close()
+	def _getPosition(self):
+		prev = self.getPreviousCommits()
+		if prev == []: return (0, 0)
+		prevpos = prev[0]._getPosition()
+		p = 0
+		for i in prev[0].getNextCommits():
+			if i.index == self.index:
+				return (prevpos[0] + p, prevpos[1] + 50)
+			p += 50
+	def getPosition(self):
+		b = self._getPosition()
+		return (b[0] + 25, b[1] + 25)
 	def __repr__(self):
 		return f"<Commit \"{self.name}\">"
 

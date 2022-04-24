@@ -20,20 +20,28 @@ while running:
 	commits = ver.getCommits()
 	screen.fill(WHITE)
 	for i in range(len(commits)):
-		r = 15
-		if pygame.Rect(0, i * 50, 50, 50).collidepoint(pygame.mouse.get_pos()):
-			# Hovered
-			r = 20
-			rendered = FONT.render(commits[i].name, True, (0, 0, 0))
-			screen.blit(rendered, (50, ((i + 1) * 50) - ((rendered.get_height() / 2) + 25)))
-			if pygame.mouse.get_pressed()[0]:
-				commits[i].apply()
-		color = (0, 0, 0)
-		if commits[i].type == "working": color = (255, 160, 0)
-		pygame.draw.circle(screen, color, (25, (i * 50) + 25), r)
+		# Setup
+		pos = commits[i].getPosition()
+		hovered = pygame.Rect(pos[0] - 25, pos[1] - 25, 50, 50).collidepoint(pygame.mouse.get_pos())
+		# Draw the circle
+		color = (255, 160, 0) if commits[i].type == "working" else (0, 0, 0) 
+		pygame.draw.circle(screen, color, commits[i].getPosition(), (20 if hovered else 15))
+		# Draw the green outline
 		if commits[i].index == ver.getCurrentCommit().index:
-			pygame.draw.circle(screen, (0, 255, 0), (25, (i * 50) + 25), r, 2)
+			pygame.draw.circle(screen, (0, 255, 0), commits[i].getPosition(), (20 if hovered else 15), 2)
+		# Draw the lines to the next commits
 		for n in commits[i].getNextCommits():
-			pygame.draw.line(screen, (0, 0, 0), (25, (i * 50) + 25), (25, (n.index * 50) + 25), 5)
+			pygame.draw.line(screen, (0, 0, 0), commits[i].getPosition(), n.getPosition(), 5)
+	# Hover effects
+	for i in commits:
+		pos = i.getPosition()
+		if pygame.Rect(pos[0] - 25, pos[1] - 25, 50, 50).collidepoint(pygame.mouse.get_pos()):
+			rendered = FONT.render(i.name, True, (0, 0, 0))
+			renderedSolid = pygame.Surface(rendered.get_size())
+			renderedSolid.fill((255, 255, 255))
+			renderedSolid.blit(rendered, (0, 0))
+			screen.blit(renderedSolid, (pos[0] + 25, pos[1] - (rendered.get_height() / 2)))
+			if pygame.mouse.get_pressed()[0]:
+				i.apply()
 	pygame.display.flip()
 	c.tick(10)
