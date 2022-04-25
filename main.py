@@ -55,6 +55,21 @@ def MAIN():
 				screen.blit(renderedSolid, (pos[0] + 25, pos[1] - (rendered.get_height() / 2)))
 				if pygame.mouse.get_pressed()[0]:
 					MENU(i.index)
+		# Update button
+		rendered = FONT.render("Update", True, (255, 255, 255))
+		updaterect = pygame.Rect(0, SCREENSIZE[1] - rendered.get_height(), rendered.get_width(), rendered.get_height())
+		if updaterect.collidepoint(pygame.mouse.get_pos()):
+			renderedSolid = pygame.Surface(rendered.get_size())
+			renderedSolid.fill((0, 255, 255))
+			renderedSolid.blit(rendered, (0, 0))
+			screen.blit(renderedSolid, (0, SCREENSIZE[1] - rendered.get_height()))
+			if pygame.mouse.get_pressed()[0]:
+				ver.update()
+		else:
+			renderedSolid = pygame.Surface(rendered.get_size())
+			renderedSolid.fill((0, 0, 255))
+			renderedSolid.blit(rendered, (0, 0))
+			screen.blit(renderedSolid, (0, SCREENSIZE[1] - rendered.get_height()))
 		pygame.display.flip()
 		c.tick(10)
 

@@ -1,5 +1,6 @@
 import json
 import os
+import requests
 from dialog import textbox as ask
 
 class Commit:
@@ -117,4 +118,10 @@ def revert(index):
 		Commit(cur).getPreviousCommits()[0].apply()
 	f = open("commits.json", "w")
 	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
+	f.close()
+
+def update():
+	r = requests.get("http://localhost:9123/")
+	f = open("commits.json", "w")
+	f.write(r.text)
 	f.close()
