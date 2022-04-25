@@ -82,7 +82,7 @@ def MAIN():
 				renderedSolid.blit(rendered, (0, 0))
 				screen.blit(renderedSolid, updaterect.topleft)
 				if pygame.mouse.get_pressed()[0]:
-					ver.send()
+					hasInternet = ver.send()
 			else:
 				renderedSolid = pygame.Surface(rendered.get_size())
 				renderedSolid.fill((0, 0, 255))

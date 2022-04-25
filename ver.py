@@ -131,6 +131,9 @@ def update(write: bool = True):
 	except: return False
 
 def send():
-	f = open("commits.json", "r")
-	r = requests.post("http://localhost:9123/write", data=f.read())
-	f.close()
+	try:
+		f = open("commits.json", "r")
+		r = requests.post("http://localhost:9123/write", data=f.read())
+		f.close()
+		return True
+	except: return False
