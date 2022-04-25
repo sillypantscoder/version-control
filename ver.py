@@ -108,8 +108,7 @@ def uncommit(index):
 	commits = json.load(f)
 	f.close()
 	if commits["commits"][index]["type"] == "commit":
-		for c in Commit(index).getNextCommits():
-			if c.type == "working": return
+		if len(Commit(index).getNextCommits()) > 0: return
 		commits["commits"][index]["type"] = "working"
 		commits["commits"][index]["name"] = "Local Changes"
 	else:

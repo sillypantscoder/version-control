@@ -118,22 +118,23 @@ def MENU(index: int):
 						if pygame.mouse.get_pressed()[0]:
 							ver.commit(i.index)
 							screen = pygame.display.set_mode(SCREENSIZE, pygame.RESIZABLE)
-							return
-				else:
+							#return
+				elif i.type == "commit":
 					# Revert button
-					rendered = FONT.render("Revert", True, (255, 255, 255))
-					renderedSolid = pygame.Surface(rendered.get_size())
-					renderedSolid.fill((255, 0, 0))
-					renderedSolid.blit(rendered, (0, 0))
-					pos = (dialogrect.left, dialogrect.bottom - rendered.get_height())
-					screen.blit(renderedSolid, pos)
-					textrect = pygame.Rect(*pos, *rendered.get_size())
-					if textrect.collidepoint(pygame.mouse.get_pos()):
-						if pygame.mouse.get_pressed()[0]:
-							ver.uncommit(i.index)
-							screen = pygame.display.set_mode(SCREENSIZE, pygame.RESIZABLE)
-							time.sleep(0.5)
-							return
+					if len(ver.Commit(i.index).getNextCommits()) == 0:
+						rendered = FONT.render("Revert", True, (255, 255, 255))
+						renderedSolid = pygame.Surface(rendered.get_size())
+						renderedSolid.fill((255, 0, 0))
+						renderedSolid.blit(rendered, (0, 0))
+						pos = (dialogrect.left, dialogrect.bottom - rendered.get_height())
+						screen.blit(renderedSolid, pos)
+						textrect = pygame.Rect(*pos, *rendered.get_size())
+						if textrect.collidepoint(pygame.mouse.get_pos()):
+							if pygame.mouse.get_pressed()[0]:
+								ver.uncommit(i.index)
+								screen = pygame.display.set_mode(SCREENSIZE, pygame.RESIZABLE)
+								time.sleep(0.5)
+								#return
 				# Go button
 				rendered = FONT.render("Go here", True, (255, 255, 255))
 				renderedSolid = pygame.Surface(rendered.get_size())
