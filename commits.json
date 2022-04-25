@@ -1,5 +1,5 @@
 {
-	"current": 2,
+	"current": 3,
 	"commits": [
 		{
 			"name": "something",
@@ -17,13 +17,23 @@
 			"files": {
 				"test.txt": "test 2"
 			},
-			"next": [],
+			"next": [
+				3
+			],
 			"type": "commit"
 		},
 		{
 			"name": "Local Changes",
 			"files": {
-				"test.txt": "testa"
+				"test.txt": "test 2"
+			},
+			"next": [],
+			"type": "working"
+		},
+		{
+			"name": "Local Changes",
+			"files": {
+				"test.txt": "test"
 			},
 			"next": [],
 			"type": "working"

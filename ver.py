@@ -66,6 +66,7 @@ def getFiles() -> "dict[str, str]":
 	return {i: open("test_dir/" + i, "r").read() for i in f}
 
 def updateFiles() -> None:
+	"""Updates the commit structure."""
 	f = open("commits.json", "r")
 	commits = json.load(f)
 	f.close()
