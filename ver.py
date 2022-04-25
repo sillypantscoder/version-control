@@ -102,7 +102,7 @@ def commit(index):
 	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
 	f.close()
 
-def uncommit(index):
+def revert(index):
 	"""Reverts a commit to a working commit."""
 	f = open("commits.json", "r")
 	commits = json.load(f)
@@ -112,7 +112,9 @@ def uncommit(index):
 		commits["commits"][index]["type"] = "working"
 		commits["commits"][index]["name"] = "Local Changes"
 	else:
-		return
+		cur = commits["current"]
+		if len(Commit(index).getNextCommits()) > 0: return
+		Commit(cur).getPreviousCommits()[0].apply()
 	f = open("commits.json", "w")
 	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
 	f.close()
