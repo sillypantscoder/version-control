@@ -1,10 +1,10 @@
 {
-	"current": 3,
+	"current": 4,
 	"commits": [
 		{
 			"name": "something",
 			"files": {
-				"test.txt": "test"
+				"test.txt": "test 1"
 			},
 			"next": [
 				1,
@@ -18,14 +18,15 @@
 				"test.txt": "test 2"
 			},
 			"next": [
-				3
+				3,
+				4
 			],
 			"type": "commit"
 		},
 		{
 			"name": "Local Changes",
 			"files": {
-				"test.txt": "test 2"
+				"test.txt": "test 1 working changes"
 			},
 			"next": [],
 			"type": "working"
@@ -33,7 +34,25 @@
 		{
 			"name": "Local Changes",
 			"files": {
-				"test.txt": "test"
+				"test.txt": "test 2 working changes"
+			},
+			"next": [],
+			"type": "working"
+		},
+		{
+			"name": "another thing",
+			"files": {
+				"test.txt": "test 2 > another thing"
+			},
+			"next": [
+				5
+			],
+			"type": "commit"
+		},
+		{
+			"name": "Local Changes",
+			"files": {
+				"test.txt": "another thing working changes"
 			},
 			"next": [],
 			"type": "working"

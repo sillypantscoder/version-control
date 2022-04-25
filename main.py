@@ -135,7 +135,7 @@ def MENU(index: int):
 							time.sleep(0.5)
 							return
 				# Go button
-				rendered = FONT.render("Go here", True, (0, 0, 0))
+				rendered = FONT.render("Go here", True, (255, 255, 255))
 				renderedSolid = pygame.Surface(rendered.get_size())
 				renderedSolid.fill((0, 0, 255))
 				renderedSolid.blit(rendered, (0, 0))
