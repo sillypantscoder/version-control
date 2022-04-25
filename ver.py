@@ -125,3 +125,8 @@ def update():
 	f = open("commits.json", "w")
 	f.write(r.text)
 	f.close()
+
+def send():
+	f = open("commits.json", "r")
+	r = requests.post("http://localhost:9123/write", data=f.read())
+	f.close()

@@ -62,14 +62,29 @@ def MAIN():
 			renderedSolid = pygame.Surface(rendered.get_size())
 			renderedSolid.fill((0, 255, 255))
 			renderedSolid.blit(rendered, (0, 0))
-			screen.blit(renderedSolid, (0, SCREENSIZE[1] - rendered.get_height()))
+			screen.blit(renderedSolid, updaterect.topleft)
 			if pygame.mouse.get_pressed()[0]:
 				ver.update()
 		else:
 			renderedSolid = pygame.Surface(rendered.get_size())
 			renderedSolid.fill((0, 0, 255))
 			renderedSolid.blit(rendered, (0, 0))
-			screen.blit(renderedSolid, (0, SCREENSIZE[1] - rendered.get_height()))
+			screen.blit(renderedSolid, updaterect.topleft)
+		# Send changes button
+		rendered = FONT.render("Send changes", True, (255, 255, 255))
+		updaterect = pygame.Rect(SCREENSIZE[0] - rendered.get_width(), SCREENSIZE[1] - rendered.get_height(), rendered.get_width(), rendered.get_height())
+		if updaterect.collidepoint(pygame.mouse.get_pos()):
+			renderedSolid = pygame.Surface(rendered.get_size())
+			renderedSolid.fill((0, 255, 255))
+			renderedSolid.blit(rendered, (0, 0))
+			screen.blit(renderedSolid, updaterect.topleft)
+			if pygame.mouse.get_pressed()[0]:
+				ver.send()
+		else:
+			renderedSolid = pygame.Surface(rendered.get_size())
+			renderedSolid.fill((0, 0, 255))
+			renderedSolid.blit(rendered, (0, 0))
+			screen.blit(renderedSolid, updaterect.topleft)
 		pygame.display.flip()
 		c.tick(10)
 
