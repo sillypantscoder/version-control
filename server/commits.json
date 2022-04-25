@@ -1,0 +1,14 @@
+{
+	"current": 0,
+	"commits": {
+		"name": "something",
+		"files": {
+			"test.txt": "test 1"
+		},
+		"next": [
+			1,
+			2
+		],
+		"type": "commit"
+	}
+}
