@@ -1,5 +1,6 @@
 import json
 import os
+from dialog import textbox as ask
 
 class Commit:
 	def __init__(self, n: int):
@@ -83,6 +84,36 @@ def updateFiles() -> None:
 			commits["commits"].append({"name": "Local Changes", "files": getFiles(), "next": [], "type": "working"})
 			com["next"].append(len(commits["commits"]) - 1)
 			commits["current"] = len(commits["commits"]) - 1
+	f = open("commits.json", "w")
+	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
+	f.close()
+
+def commit(index):
+	"""Commits the current state of the files."""
+	f = open("commits.json", "r")
+	commits = json.load(f)
+	f.close()
+	if commits["commits"][index]["type"] == "working":
+		commits["commits"][index]["type"] = "commit"
+		commits["commits"][index]["name"] = ask("Enter commit name:")
+	else:
+		return
+	f = open("commits.json", "w")
+	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
+	f.close()
+
+def uncommit(index):
+	"""Reverts a commit to a working commit."""
+	f = open("commits.json", "r")
+	commits = json.load(f)
+	f.close()
+	if commits["commits"][index]["type"] == "commit":
+		for c in Commit(index).getNextCommits():
+			if c.type == "working": return
+		commits["commits"][index]["type"] = "working"
+		commits["commits"][index]["name"] = "Local Changes"
+	else:
+		return
 	f = open("commits.json", "w")
 	f.write(json.dumps(commits, indent=4).replace("    ", "\t"))
 	f.close()
