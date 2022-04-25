@@ -10,10 +10,12 @@ SCREENSIZE = [500, 500]
 screen = pygame.display.set_mode(SCREENSIZE, pygame.RESIZABLE)
 FONT = pygame.font.SysFont(pygame.font.get_default_font(), 20)
 offset = [25, 25]
+hasInternet = ver.update()
 
 def MAIN():
 	global screen
 	global SCREENSIZE
+	global hasInternet
 	c = pygame.time.Clock()
 	running = True
 	while running:
@@ -56,35 +58,36 @@ def MAIN():
 				if pygame.mouse.get_pressed()[0]:
 					MENU(i.index)
 		# Update button
-		rendered = FONT.render("Update", True, (255, 255, 255))
+		rendered = FONT.render(("Update" if hasInternet else "No internet"), True, (255, 255, 255))
 		updaterect = pygame.Rect(0, SCREENSIZE[1] - rendered.get_height(), rendered.get_width(), rendered.get_height())
 		if updaterect.collidepoint(pygame.mouse.get_pos()):
 			renderedSolid = pygame.Surface(rendered.get_size())
-			renderedSolid.fill((0, 255, 255))
+			renderedSolid.fill((0, 255, 255) if hasInternet else (255, 0, 0))
 			renderedSolid.blit(rendered, (0, 0))
 			screen.blit(renderedSolid, updaterect.topleft)
 			if pygame.mouse.get_pressed()[0]:
-				ver.update()
+				hasInternet = ver.update(hasInternet)
 		else:
 			renderedSolid = pygame.Surface(rendered.get_size())
 			renderedSolid.fill((0, 0, 255))
 			renderedSolid.blit(rendered, (0, 0))
 			screen.blit(renderedSolid, updaterect.topleft)
 		# Send changes button
-		rendered = FONT.render("Send changes", True, (255, 255, 255))
-		updaterect = pygame.Rect(SCREENSIZE[0] - rendered.get_width(), SCREENSIZE[1] - rendered.get_height(), rendered.get_width(), rendered.get_height())
-		if updaterect.collidepoint(pygame.mouse.get_pos()):
-			renderedSolid = pygame.Surface(rendered.get_size())
-			renderedSolid.fill((0, 255, 255))
-			renderedSolid.blit(rendered, (0, 0))
-			screen.blit(renderedSolid, updaterect.topleft)
-			if pygame.mouse.get_pressed()[0]:
-				ver.send()
-		else:
-			renderedSolid = pygame.Surface(rendered.get_size())
-			renderedSolid.fill((0, 0, 255))
-			renderedSolid.blit(rendered, (0, 0))
-			screen.blit(renderedSolid, updaterect.topleft)
+		if hasInternet:
+			rendered = FONT.render("Send changes", True, (255, 255, 255))
+			updaterect = pygame.Rect(SCREENSIZE[0] - rendered.get_width(), SCREENSIZE[1] - rendered.get_height(), rendered.get_width(), rendered.get_height())
+			if updaterect.collidepoint(pygame.mouse.get_pos()):
+				renderedSolid = pygame.Surface(rendered.get_size())
+				renderedSolid.fill((0, 255, 255))
+				renderedSolid.blit(rendered, (0, 0))
+				screen.blit(renderedSolid, updaterect.topleft)
+				if pygame.mouse.get_pressed()[0]:
+					ver.send()
+			else:
+				renderedSolid = pygame.Surface(rendered.get_size())
+				renderedSolid.fill((0, 0, 255))
+				renderedSolid.blit(rendered, (0, 0))
+				screen.blit(renderedSolid, updaterect.topleft)
 		pygame.display.flip()
 		c.tick(10)
 
